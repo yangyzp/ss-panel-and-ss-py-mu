@@ -114,17 +114,14 @@ install_ss_py_mu(){
 	}
 	install_soft_for_each
 	echo "Let's setup your ssnode/root"
-	git clone https://github.com/mmmwhy/shadowsocks-py-mu.git "/root/shadowsocks-py-mu"
+	git clone https://github.com/yangyzp/shadowsocks.git "/root/shadowsocks"
 	#modify Config.py
 	echo -e "modify Config.py...\n"
 	Userdomain=${Userdomain:-"https://ss.91vps.club"}
-	sed -i "s#http://domain#${Userdomain}#" /root/shadowsocks-py-mu/shadowsocks/config.py
 	Usermukey=${Usermukey:-"mupass"}
-	sed -i "s#mupass#${Usermukey}#" /root/shadowsocks-py-mu/shadowsocks/config.py
 	UserNODE_ID=${UserNODE_ID:-"1"}
-	sed -i "s#'1'#'${UserNODE_ID}'#" /root/shadowsocks-py-mu/shadowsocks/config.py
 	echo_supervisord_conf > /etc/supervisord.conf
-	sed -i '$a [program:ss-manyuser]\ncommand = python /root/shadowsocks-py-mu/shadowsocks/servers.py\nuser = root\nautostart = true\nautorestart = true' /etc/supervisord.conf
+	sed -i '$a [program:ss-manyuser]\ncommand = python /root/shadowsocks/servers.py\nuser = root\nautostart = true\nautorestart = true' /etc/supervisord.conf
 	supervisord
 	systemctl stop firewalld.service
 	systemctl disable firewalld.service
@@ -193,12 +190,11 @@ one_click_all(){
 	}
 	install_soft_for_each
 	echo "Let's setup your ssnode/root"
-	git clone https://github.com/mmmwhy/shadowsocks-py-mu.git "/root/shadowsocks-py-mu"
+	git clone https://github.com/yangyzp/shadowsocks.git "/root/shadowsocks"
 	#modify Config.py
 	echo -e "modify Config.py...\n"
-	sed -i "s#domain#${IPAddress}#" /root/shadowsocks-py-mu/shadowsocks/config.py
 	echo_supervisord_conf > /etc/supervisord.conf
-	sed -i '$a [program:ss-manyuser]\ncommand = python /root/shadowsocks-py-mu/shadowsocks/servers.py\nuser = root\nautostart = true\nautorestart = true' /etc/supervisord.conf
+	sed -i '$a [program:ss-manyuser]\ncommand = python /root/shadowsocks/servers.py\nuser = root\nautostart = true\nautorestart = true' /etc/supervisord.conf
 	supervisord
 	systemctl stop firewalld.service
 	systemctl disable firewalld.service
